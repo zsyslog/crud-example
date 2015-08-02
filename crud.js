@@ -2,9 +2,10 @@ var SALT_WORK_FACTOR = 10;
 var mongoskin = require('mongoskin');
 var db = mongoskin.db('mongodb://localhost:27017/ms');
 
+db.bind('msusers');
+
 // LIST users function
 exports.list = function(req, res) {
-	db.bind('msusers');
 	var criteria = {};
 	var options = {
 		"limit": 100, // TODO: limit by a external param
@@ -20,9 +21,28 @@ exports.list = function(req, res) {
       			});
 }
 
+// Get user by id function
+exports.getuser = function(req, res, next) {
+	var id = parseInt(req.params.id);
+	var criteria = {"_id": id};
+	var options = {}
+	console.log(criteria)
+	db.msusers.find(criteria, options)
+		.toArray(function(e, results){
+			if (e) return next(e);
+      if (results.length === 1) {
+      	delete results[0].password;
+      	results[0].exists = true;
+      	res.send(results[0]);
+      } else {
+      	res.send({_id: id, exists: false});
+      }
+      	
+		});
+}
+
 // ADD users function
 exports.add = function(req, res) {
-	db.bind('msusers');
 	var bcrypt = require('bcrypt');
 
 	// Auto-Incrementing Sequence UserID
@@ -49,3 +69,70 @@ exports.add = function(req, res) {
 
 	})
 }
+
+
+// USER delete function
+exports.delete = function(req, res) {
+  var objectid = req.body.objectid; // obtener id del body
+  var ret = {
+  	user: objectid
+  }
+
+  db.msusers.removeById(objectid, function(error, modified) {
+    if (error === null && modified == 1)
+      ret.deletion = "success";
+    else
+      ret.deletion = "error";
+    res.send(ret)
+  });
+}
+
+// USER update function
+exports.update = function(req, res) {
+	var bcrypt = require('bcrypt');
+  var objectid = req.body.objectid;
+  var user;
+  var ret = {user: objectid};
+
+
+  if(req.body.hasOwnProperty('password')) {
+    user = {
+      $set: {
+              name : req.body.name,
+              email : req.body.email || '',
+              last_name: req.body.last_name,
+	     				bdate: req.body.bdate,
+              password : req.body.password
+      }
+    };
+    bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+      bcrypt.hash(user.$set.password, salt, function(err, hash) {
+        user.$set.password = hash;
+        db.msusers.updateById(objectid, user, function(error, modified) {
+        	if (error === null && modified == 1)
+			      ret.deletion = "success";
+			    else
+			      ret.deletion = "error";
+			    res.send(ret)
+        });
+      });
+    });
+  } else {
+    user = {
+      $set: {
+      	name : req.body.name,
+        email : req.body.email || '',
+        last_name: req.body.last_name,
+ 				bdate: req.body.bdate,
+      }
+    };
+    db.msusers.updateById(objectid, user, function(error, modified) {
+      if (error === null && modified == 1)
+	      ret.deletion = "success";
+	    else
+	      ret.deletion = "error";
+	    res.send(ret)
+    });
+  }
+}
+
