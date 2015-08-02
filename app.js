@@ -19,6 +19,6 @@ app.get('/crud/api/users', crud.list);
 app.get('/crud/api/user/:id', crud.getuser);
 app.post('/crud/api/user', crud.add);
 app.put('/crud/api/user/:id', crud.update);
-app.delete('/crud/api/user', crud.delete);
+app.delete('/crud/api/user/:id', crud.delete);
 
 var server = app.listen(6000);

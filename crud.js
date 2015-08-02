@@ -73,12 +73,12 @@ exports.add = function(req, res) {
 
 // USER delete function
 exports.delete = function(req, res) {
-  var objectid = req.body.objectid; // obtener id del body
+  var userid = req.params.id; // obtener id del body
   var ret = {
-  	user: objectid
+  	"user": userid
   }
 
-  db.msusers.removeById(objectid, function(error, modified) {
+  db.msusers.removeById(userid, function(error, modified) {
     if (error === null && modified == 1)
       ret.deletion = "success";
     else

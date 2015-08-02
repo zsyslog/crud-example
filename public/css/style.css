@@ -1,0 +1,15 @@
+/* custom styles */
+span.action {
+	width: 24px;
+	height: 24px;
+	cursor: pointer;
+}
+span.action:hover {
+	color: blue;
+}
+span.action.delete {
+		color: red;
+}
+span.action.edit {
+		color: gray;
+}

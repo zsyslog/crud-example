@@ -1,0 +1,26 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Email</th>
+      <th>Fecha de Nacimiento</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="user in users">
+      <td ng-bind="user._id"></td>
+      <td ng-bind="user.name"></td>
+      <td ng-bind="user.last_name"></td>
+      <td ng-bind="user.email"></td>
+      <td ng-bind="user.bdate"></td>
+      <td>
+        <span class="action edit fa fa-pencil-square-o" ng-click="useredit(user._id, $index)"></span>
+        <span class="action delete fa fa-trash" ng-click="userdel(user._id, $index)"></span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
