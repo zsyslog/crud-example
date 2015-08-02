@@ -25,6 +25,9 @@
   },
   "homepage": "https://github.com/zsyslog/crud-example#readme",
   "dependencies": {
-    "express": "^4.13.2"
+    "bcrypt": "^0.8.4",
+    "ejs": "^2.3.3",
+    "express": "^4.13.2",
+    "mongoskin": "^1.4.13"
   }
 }
