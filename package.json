@@ -1,0 +1,30 @@
+{
+  "name": "crud-example",
+  "version": "1.0.0",
+  "description": "crud example using express, nodejs, angularjs, bootstrap y elasticsearch",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/zsyslog/crud-example.git"
+  },
+  "keywords": [
+    "crud",
+    "nodejs",
+    "angularjs",
+    "bootstrap",
+    "express",
+    "mongodb"
+  ],
+  "author": "zsyslog",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zsyslog/crud-example/issues"
+  },
+  "homepage": "https://github.com/zsyslog/crud-example#readme",
+  "dependencies": {
+    "express": "^4.13.2"
+  }
+}
