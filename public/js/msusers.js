@@ -79,13 +79,15 @@ var app = angular.module('app', ['ngRoute', 'ngResource', 'ngFileUpload'])
 		$scope.bmonth = $scope.datepicker.months[0];
 		$scope.bday = $scope.datepicker.days[0];
 
-
 		$scope.save = function() {
 			$scope.user.bdate = new Date($scope.byear.value, $scope.bmonth.value, $scope.bday.value);
 
 			$scope.errors = [];
 			if (typeof $scope.user.name === 'undefined') {
 				$scope.errors.push("falta su nombre");
+			}
+			if (typeof $scope.user.last_name === 'undefined') {
+				$scope.errors.push("falta su apellido");
 			}
 			if (typeof $scope.user.password === 'undefined') {
 				$scope.errors.push("error en password");
@@ -102,10 +104,13 @@ var app = angular.module('app', ['ngRoute', 'ngResource', 'ngFileUpload'])
 					console.log(response);
 					alert("Usuario agregado :)");
 					$location.url('/');
-				})
+				});
 		}
 
-		
+		$scope.back = function() {
+			$location.url('/')
+		};
+
 	})
 
 .controller('Edit', function($scope, $http, $routeParams, $location, Upload) {
@@ -200,6 +205,7 @@ var app = angular.module('app', ['ngRoute', 'ngResource', 'ngFileUpload'])
 	}	
 })
 
+// for testing purposes
 .controller('Upload', function($scope, $http, $routeParams, Upload) {
 		$scope.$watch('files', function () {
         $scope.upload($scope.files);

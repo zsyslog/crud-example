@@ -5,13 +5,11 @@ var db = mongoskin.db('mongodb://localhost:27017/ms');
 
 exports.store = function(req, res, next) {
 
-	console.log(req);
-	
 	var form = new formidable.IncomingForm();
   
   form.parse(req, function(err, fields, files) {
     var timestamp = +new Date;
-    var destFileName = "./uploads/" + timestamp + "_" + files.file.name;
+    var destFileName = __dirname + "/uploads/" + timestamp + "_" + files.file.name;
     var fs = require('fs');
     fs.createReadStream(files.file.path)
     	.pipe(fs.createWriteStream(destFileName));

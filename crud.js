@@ -85,7 +85,7 @@ exports.delete = function(req, res) {
   	"user": userid
   }
 
-  db.msusers.removeById(userid, function(error, modified) {
+  db.msusers.removeById(parseInt(userid), function(error, modified) {
     if (error === null && modified == 1)
       ret.deletion = "success";
     else
