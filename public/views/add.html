@@ -1,0 +1,62 @@
+<div class="alert alert-danger" role="alert" ng-if="errors.length">
+  <strong>Oh! rayos!</strong>
+    <ul>
+      <li ng-repeat="error in errors">{{error}}</li>
+    </ul>
+</div>
+
+<form class="form-horizontal">
+    <h2> Nuevo Usuario </h2>
+    <p> (todos los datos son obligatorios) </p>
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="name">Nombre</label>
+        <div class="col-xs-10">
+            <input type="text" id="name" class="form-control" placeholder="Nombre" ng-model="user.name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="lastName">Apellido</label>
+        <div class="col-xs-10">
+            <input type="text" id="lastName" class="form-control" placeholder="Apellido" ng-model="user.last_name">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="email">e-mail</label>
+        <div class="col-xs-10">
+            <input type="email" id="email" class="form-control" placeholder="e-mail" ng-model="user.email">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="bdate">Fecha de Nacimiento</label>
+        <div class="col-xs-3">
+            <select ng-options="year.value for year in datepicker.years" class="form-control required" ng-model="byear"></select>
+        </div>
+        <div class="col-xs-2">
+            <select ng-options="month.value + 1 for month in datepicker.months" class="form-control required" ng-model="bmonth"></select>
+        </div>
+        <div class="col-xs-2">
+            <select ng-options="day.value for day in datepicker.days" class="form-control required" ng-model="bday"></select>
+        </div>
+    </div>
+
+    <h2> Contraseña </h2>
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="password">Contraseña</label>
+        <div class="col-xs-10">
+            <input type="password" id="password" class="form-control" ng-model="user.password">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-xs-2 control-label" for="rpassword">Repita la Contraseña</label>
+        <div class="col-xs-10">
+            <input type="password" id="rpassword" class="form-control" ng-model="user.rpassword" >
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button class="btn" ng-click="save()">Guardar</button>
+        <button class="btn">Volver</button>
+    </div>
+
+</form>
+

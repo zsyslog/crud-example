@@ -33,7 +33,14 @@ exports.getuser = function(req, res, next) {
       if (results.length === 1) {
       	delete results[0].password;
       	results[0].exists = true;
-      	res.send(results[0]);
+      	db.collection('images').find({"userid":req.params.id}).toArray(function(err, docs) {
+      		console.log(docs);
+      		results[0].avatars = [];
+      		for (i in docs)
+      			results[0].avatars.push(docs[i].url);
+      		res.send(results[0]);
+      	})
+      	
       } else {
       	res.send({_id: id, exists: false});
       }
@@ -44,16 +51,16 @@ exports.getuser = function(req, res, next) {
 // ADD users function
 exports.add = function(req, res) {
 	var bcrypt = require('bcrypt');
-
+	console.log(req.body)
 	// Auto-Incrementing Sequence UserID
   db.collection('counters').findAndModify({ _id: "userid" }, {}, { $inc: { seq: 1 } }, { new: true }, function(err, doc) { 
 		var user = {
 	     "_id": doc.seq,
-	     "name": "Juan Carlos",
-	     "last_name": "Jimenez",
-	     "email": "jc@jcjimenez.me",
-	     "bdate": "31-05-1976",
-	     "password": "password"
+	     "name": req.body.name,
+	     "last_name": req.body.last_name,
+	     "email": req.body.email,
+	     "bdate": req.body.bdate,
+	     "password": req.body.password
 		}
 
 		bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
@@ -90,10 +97,9 @@ exports.delete = function(req, res) {
 // USER update function
 exports.update = function(req, res) {
 	var bcrypt = require('bcrypt');
-  var objectid = req.body.objectid;
+  var objectid = req.params.id;
   var user;
   var ret = {user: objectid};
-
 
   if(req.body.hasOwnProperty('password')) {
     user = {
@@ -108,11 +114,11 @@ exports.update = function(req, res) {
     bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
       bcrypt.hash(user.$set.password, salt, function(err, hash) {
         user.$set.password = hash;
-        db.msusers.updateById(objectid, user, function(error, modified) {
+        db.msusers.updateById(parseInt(ret.user), user, function(error, modified) {
         	if (error === null && modified == 1)
-			      ret.deletion = "success";
+			      ret.updating = "success";
 			    else
-			      ret.deletion = "error";
+			      ret.updating = "error";
 			    res.send(ret)
         });
       });
@@ -126,11 +132,14 @@ exports.update = function(req, res) {
  				bdate: req.body.bdate,
       }
     };
-    db.msusers.updateById(objectid, user, function(error, modified) {
+    console.log(user);
+    db.msusers.updateById(parseInt(ret.user), user, function(error, modified) {
+    	console.log(error);
+    	console.log(modified)
       if (error === null && modified == 1)
-	      ret.deletion = "success";
+	      ret.updating = "success";
 	    else
-	      ret.deletion = "error";
+	      ret.updating = "error";
 	    res.send(ret)
     });
   }

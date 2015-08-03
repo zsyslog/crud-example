@@ -1,3 +1,5 @@
+<button class="btn fa fa-user-plus" ng-click="add()"> Añadir usuario nuevo </button>
+<br>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -17,10 +19,14 @@
       <td ng-bind="user.email"></td>
       <td ng-bind="user.bdate"></td>
       <td>
-        <span class="action edit fa fa-pencil-square-o" ng-click="useredit(user._id, $index)"></span>
+        <span class="action edit fa fa-user" ng-click="userview(user._id)"></span>
+        <span class="action edit fa fa-pencil-square-o" ng-click="useredit(user._id)"></span>
         <span class="action delete fa fa-trash" ng-click="userdel(user._id, $index)"></span>
       </td>
     </tr>
   </tbody>
 </table>
+<br>
+<button class="btn fa fa-user-plus" ng-click="add()"> Añadir usuario nuevo </button>
+
 

@@ -29,6 +29,13 @@
     "body-parser": "^1.13.3",
     "ejs": "^2.3.3",
     "express": "^4.13.2",
-    "mongoskin": "^1.4.13"
+    "formidable": "^1.0.17",
+    "mkdirp": "^0.5.1",
+    "mongoskin": "^1.4.13",
+    "morgan": "^1.6.1",
+    "multer": "^1.0.1",
+    "multipart": "^0.1.5",
+    "posix": "^2.0.1",
+    "rimraf": "^2.4.2"
   }
 }
